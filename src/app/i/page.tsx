@@ -61,7 +61,7 @@ export default function DashboardPage() {
 					meaning={searchResult.meaning}
 				/>
 			) : (
-				!searchResult && <p>Izlash uchun so'zni kiriting</p>
+				!searchResult && <p>Izlash uchun so&apos;zni kiriting</p>
 			)}
 			<Toaster richColors closeButton theme='system' />
 		</div>
