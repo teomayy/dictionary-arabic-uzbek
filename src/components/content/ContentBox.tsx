@@ -17,7 +17,7 @@ export default function ContentBox({
 		<section className='flex flex-col gap-8'>
 			<section className='flex flex-col gap-1'>
 				<div className='flex justify-between w-full'>
-					<h1 className='text-[64px] font-bold'>{word}</h1>
+					<h1 className='text-3xl sm:text-[64px] font-bold'>{word}</h1>
 					<button className='group h-16 w-16 rounded-full bg-primary/20 hover:bg-primary flex items-center justify-center text-4xl transition-all'>
 						<Play className='text-primary fill-primary group-hover:text-white group-hover:fill-white transition-all' />
 					</button>
