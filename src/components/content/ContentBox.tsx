@@ -31,7 +31,7 @@ export default function ContentBox({
 
 			{/* MEANING */}
 			<section className='flex flex-col gap-3'>
-				<p className='text-xl'>Ma&apos;snosi</p>
+				<p className='text-xl'>Ma&apos;nosi</p>
 				{meanings.map((meaning, index) => (
 					<div key={index} className='flex flex-row items-center gap-2'>
 						<div className='h-1.5 w-1.5 bg-primary rounded-full' />
