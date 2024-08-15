@@ -4,20 +4,20 @@ interface ContentBoxProps {
 	word: string
 	transcription: string
 	partOfSpeech: string
-	meaning: string
+	meanings: string[]
 }
 
 export default function ContentBox({
 	word,
 	transcription,
 	partOfSpeech,
-	meaning,
+	meanings,
 }: ContentBoxProps) {
 	return (
-		<section className='flex flex-col gap-8'>
+		<section className='flex flex-col gap-8 mb-2 border p-5 '>
 			<section className='flex flex-col gap-1'>
 				<div className='flex justify-between w-full'>
-					<h1 className='text-3xl sm:text-[64px] font-bold'>{word}</h1>
+					<h1 className='text-3xl pt-4 sm:text-[64px] font-bold'>{word}</h1>
 					<button className='group h-16 w-16 rounded-full bg-primary/20 hover:bg-primary flex items-center justify-center text-4xl transition-all'>
 						<Play className='text-primary fill-primary group-hover:text-white group-hover:fill-white transition-all' />
 					</button>
@@ -32,10 +32,12 @@ export default function ContentBox({
 			{/* MEANING */}
 			<section className='flex flex-col gap-3'>
 				<p className='text-xl'>Ma&apos;snosi</p>
-				<div className='flex flex-row items-center gap-2'>
-					<div className='h-1.5 w-1.5 bg-primary rounded-full' />
-					<p>{meaning}</p>
-				</div>
+				{meanings.map((meaning, index) => (
+					<div key={index} className='flex flex-row items-center gap-2'>
+						<div className='h-1.5 w-1.5 bg-primary rounded-full' />
+						<p>{meaning}</p>
+					</div>
+				))}
 			</section>
 		</section>
 	)

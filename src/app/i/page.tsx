@@ -28,24 +28,25 @@ const getFirstWord = (input: string): string => {
 }
 
 export default function DashboardPage() {
-	const [searchResult, setSearchResult] = useState<DictionaryEntry | null>(null)
+	const [searchResult, setSearchResult] = useState<DictionaryEntry[]>([])
 
 	const handleSearch = (searchTerm: string) => {
 		if (searchTerm.trim() === '') {
-			setSearchResult(null)
+			setSearchResult([])
 			return
 		}
 		const lowerCaseSearchTerm = searchTerm.toLowerCase()
-		const result = dictionary.find(
+		const result = dictionary.filter(
 			(entry: DictionaryEntry) =>
 				entry.word === lowerCaseSearchTerm ||
 				entry.letters === lowerCaseSearchTerm ||
-				getFirstWord(entry.short_meaning) === lowerCaseSearchTerm
+				getFirstWord(entry.short_meaning) === lowerCaseSearchTerm ||
+				entry.root === lowerCaseSearchTerm
 		)
-		if (result) {
+		if (result.length > 0) {
 			setSearchResult(result)
 		} else {
-			setSearchResult(null)
+			setSearchResult([])
 			toast.error(`"${searchTerm}" so'zi topilmadi`)
 		}
 	}
@@ -53,20 +54,21 @@ export default function DashboardPage() {
 		<div className='max-w-[689px] flex flex-col gap-10 mx-auto pt-10 px-5'>
 			<Header />
 			<SearchBox onSearch={handleSearch} />
-			{searchResult ? (
-				<ContentBox
-					word={searchResult.word}
-					transcription={searchResult.other}
-					partOfSpeech={searchResult.short_meaning}
-					meaning={searchResult.meaning}
-				/>
-			) : (
-				!searchResult && (
-					<div className='text-center'>
-						<p>Izlash uchun so&apos;zni kiriting</p>
-					</div>
-				)
-			)}
+			{searchResult?.length > 0
+				? searchResult.map(result => (
+						<ContentBox
+							key={result.id}
+							word={result.word}
+							transcription={result.other}
+							partOfSpeech={result.short_meaning}
+							meanings={[result.meaning, result.long_words]}
+						/>
+				  ))
+				: !searchResult && (
+						<div className='text-center'>
+							<p>Izlash uchun so&apos;zni kiriting</p>
+						</div>
+				  )}
 			<Toaster richColors closeButton theme='system' />
 		</div>
 	)
