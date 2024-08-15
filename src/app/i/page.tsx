@@ -41,7 +41,8 @@ export default function DashboardPage() {
 				entry.word === lowerCaseSearchTerm ||
 				entry.letters === lowerCaseSearchTerm ||
 				getFirstWord(entry.short_meaning) === lowerCaseSearchTerm ||
-				entry.root === lowerCaseSearchTerm
+				entry.root === lowerCaseSearchTerm ||
+				entry.short_meaning === lowerCaseSearchTerm
 		)
 		if (result.length > 0) {
 			setSearchResult(result)
