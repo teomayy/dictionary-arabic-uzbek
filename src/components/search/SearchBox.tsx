@@ -1,3 +1,4 @@
+import { useStore } from '@/store/useStore'
 import { cn } from '@/utils/cn'
 import { Keyboard, Search } from 'lucide-react'
 import { useState } from 'react'
@@ -8,18 +9,18 @@ interface SearchBoxProps {
 }
 
 export default function SearchBox({ onSearch }: SearchBoxProps) {
-	const [searchTerm, setSearchTerm] = useState<string>('')
+	const { searchTerm, setSearchTerm } = useStore()
 	const [showKeyboard, setShowKeyboard] = useState<boolean>(false)
 	const [isArabic, setIsArabic] = useState<boolean>(false)
 
-	const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
-		onSearch(searchTerm)
-		setShowKeyboard(false)
-	}
-
 	const handleInputChange = (input: string) => {
-		setSearchTerm(input)
+		console.log('log', input)
+
+		if (input !== searchTerm) {
+			setSearchTerm(input)
+			onSearch(input)
+		}
+		console.log('log after', searchTerm)
 	}
 
 	const toggleKeyboard = () => {
@@ -32,10 +33,7 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
 
 	return (
 		<div className='relative flex flex-col items-center'>
-			<form
-				onSubmit={handleSearch}
-				className='relative flex items-center w-full gap-4'
-			>
+			<form className='relative flex items-center w-full gap-4'>
 				<div className='flex flex-row'>
 					<div className='flex items-start'>
 						<button type='button' onClick={toggleKeyboard}>
@@ -77,7 +75,7 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
 						isArabic ? 'text-right' : 'text-left'
 					}`}
 					value={searchTerm}
-					onChange={e => setSearchTerm(e.target.value)}
+					onChange={e => handleInputChange(e.target.value)}
 				/>
 				<button type='submit' className='absolute right-3 text-primary'>
 					<Search />
@@ -85,7 +83,11 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
 			</form>
 			{showKeyboard && (
 				<div className='absolute bottom-[-200px] w-full dark:text-black'>
-					<ArabicKeyboard onChange={handleInputChange} />
+					<ArabicKeyboard
+						onChange={handleInputChange}
+						input={searchTerm}
+						setInput={setSearchTerm}
+					/>
 				</div>
 			)}
 		</div>

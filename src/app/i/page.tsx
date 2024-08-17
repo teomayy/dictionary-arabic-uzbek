@@ -1,5 +1,4 @@
 'use client'
-
 import ContentBox from '@/components/content/ContentBox'
 import { Header } from '@/components/header/Header'
 import SearchBox from '@/components/search/SearchBox'
@@ -36,13 +35,14 @@ export default function DashboardPage() {
 			return
 		}
 		const lowerCaseSearchTerm = searchTerm.toLowerCase()
-		const result = dictionary.filter(
-			(entry: DictionaryEntry) =>
-				entry.word === lowerCaseSearchTerm ||
-				entry.letters === lowerCaseSearchTerm ||
-				getFirstWord(entry.short_meaning) === lowerCaseSearchTerm ||
-				entry.root === lowerCaseSearchTerm ||
-				entry.short_meaning === lowerCaseSearchTerm
+		const result = dictionary.filter((entry: DictionaryEntry) =>
+			[
+				entry.word,
+				entry.letters,
+				getFirstWord(entry.short_meaning),
+				entry.root,
+				entry.short_meaning,
+			].includes(lowerCaseSearchTerm)
 		)
 		if (result.length > 0) {
 			setSearchResult(result)
@@ -55,21 +55,21 @@ export default function DashboardPage() {
 		<div className='max-w-[689px] flex flex-col gap-10 mx-auto pt-10 px-5'>
 			<Header />
 			<SearchBox onSearch={handleSearch} />
-			{searchResult?.length > 0
-				? searchResult.map(result => (
-						<ContentBox
-							key={result.id}
-							word={result.word}
-							transcription={result.other}
-							partOfSpeech={result.short_meaning}
-							meanings={[result.meaning, result.long_words]}
-						/>
-				  ))
-				: !searchResult && (
-						<div className='text-center'>
-							<p>Izlash uchun so&apos;zni kiriting</p>
-						</div>
-				  )}
+			{searchResult.length > 0 ? (
+				searchResult.map(result => (
+					<ContentBox
+						key={result.id}
+						word={result.word}
+						transcription={result.other}
+						partOfSpeech={result.short_meaning}
+						meanings={[result.meaning, result.long_words]}
+					/>
+				))
+			) : (
+				<div className='text-center'>
+					<p>Izlash uchun so&apos;zni kiriting</p>
+				</div>
+			)}
 			<Toaster richColors closeButton theme='system' />
 		</div>
 	)
