@@ -1,18 +1,52 @@
 export const BOOKMARKS_LOCALSTORAGE_KEY = 'arabic_uzbek_dictionary'
 
-export default function isBookmarked(id: number) {
+export function isBookmarked(id: number): boolean {
 	const bookmarks = localStorage.getItem(BOOKMARKS_LOCALSTORAGE_KEY)
-	if (!bookmarks || bookmarks.length === 0) {
+	if (!bookmarks) {
 		return false
 	}
 
-	let bookmarksArray = []
-
 	try {
-		bookmarksArray = JSON.parse(bookmarks) as number[]
+		const bookmarksArray = JSON.parse(bookmarks) as number[]
+		return bookmarksArray.includes(id)
 	} catch (error) {
 		return false
 	}
+}
 
-	return bookmarksArray.includes(id)
+export function addBookmark(id: number): void {
+	const bookmarks = localStorage.getItem(BOOKMARKS_LOCALSTORAGE_KEY)
+	let bookmarksArray: number[] = []
+
+	if (bookmarks) {
+		try {
+			bookmarksArray = JSON.parse(bookmarks) as number[]
+		} catch (error) {
+			throw error
+		}
+	}
+
+	if (!bookmarksArray.includes(id)) {
+		bookmarksArray.push(id)
+		localStorage.setItem(
+			BOOKMARKS_LOCALSTORAGE_KEY,
+			JSON.stringify(bookmarksArray)
+		)
+	}
+}
+
+export function removeBookmark(id: number): void {
+	const bookmarks = localStorage.getItem(BOOKMARKS_LOCALSTORAGE_KEY)
+	if (!bookmarks) return
+
+	try {
+		let bookmarksArray = JSON.parse(bookmarks) as number[]
+		bookmarksArray = bookmarksArray.filter(bookmarkId => bookmarkId !== id)
+		localStorage.setItem(
+			BOOKMARKS_LOCALSTORAGE_KEY,
+			JSON.stringify(bookmarksArray)
+		)
+	} catch (error) {
+		throw error
+	}
 }

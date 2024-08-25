@@ -1,8 +1,10 @@
 import ClientBackButton from '@/components/buttons/ClientBackButton'
+import CopyButton from '@/components/buttons/CopyButton'
+import ErrorPage from '@/components/error/ErrorPage'
 import SimilarWords from '@/components/similar-words/SimilarWords'
 import { IWord } from '@/models/dictionary'
 import { getDictionary } from '@/services/dictionary-service'
-import { Bookmark, Copy } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
 interface DescriptionProps {
 	params: { id: string }
 }
@@ -18,7 +20,7 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 
 	if (!word) {
 		//TODO NOT FOUND PAGE
-		return <div>Word not found</div>
+		return <ErrorPage message="So'z topilmadi" />
 	}
 
 	return (
@@ -33,7 +35,7 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 					<h1 className='text-2xl font-bold text-[#1CB854]'>{word.word}</h1>
 					<p className='mt-4 dark:text-[#F5F5F6]'>{word.meaning}</p>
 					<div className='flex justify-between mt-4'>
-						<Copy className='cursor-pointer dark:hover:text-slate-400' />
+						<CopyButton textToCopy={word.meaning} />
 						<Bookmark className='h-6 w-6 cursor-pointer dark:hover:text-slate-400' />
 					</div>
 				</div>
