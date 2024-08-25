@@ -18,6 +18,12 @@ export default function SearchBox() {
 		setShowKeyboard(prev => !prev)
 	}
 
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		setShowKeyboard(false)
+		// Add any additional submit logic here if needed
+	}
+
 	return (
 		<div className='relative flex flex-row items-center'>
 			<div className='flex items-start'>
@@ -29,7 +35,10 @@ export default function SearchBox() {
 					/>
 				</button>
 			</div>
-			<form className='relative flex items-center w-full gap-4'>
+			<form
+				className='relative flex items-center w-full gap-4'
+				onSubmit={handleSubmit}
+			>
 				<input
 					type='text'
 					placeholder='Qidirish...'
