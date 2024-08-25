@@ -1,35 +1,30 @@
-import { useEffect } from 'react'
 import Keyboard from 'react-simple-keyboard'
 import 'react-simple-keyboard/build/css/index.css'
 
 interface ArabicKeyboardProps {
-	onChange: (input: string) => void
-	input: string
-	setInput: (input: string) => void
+	onChange: (value: string) => void
+	value: string
 }
 
 export default function ArabicKeyboard({
 	onChange,
-	input,
-	setInput,
+	value,
 }: ArabicKeyboardProps) {
 	const handleKeyPress = (button: string) => {
 		if (button === '{bksp}') {
-			setInput(input.slice(0, -1))
+			onChange(value.slice(0, -1))
 		} else {
-			setInput(input + button)
+			onChange(value + button)
 		}
-		onChange(input + button)
 	}
 
-	useEffect(() => {
-		onChange(input)
-	}, [input])
+	// useEffect(() => {
+	// 	onChange(value)
+	// }, [value])
 
 	return (
 		<Keyboard
 			layoutName='arabic'
-			onChange={onChange}
 			onKeyPress={handleKeyPress}
 			layout={{
 				arabic: [

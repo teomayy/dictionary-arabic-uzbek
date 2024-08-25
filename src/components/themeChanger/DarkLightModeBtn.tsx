@@ -1,7 +1,6 @@
 'use client'
 
 import { cn } from '@/utils/cn'
-import { Moon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 type Props = {}
@@ -20,8 +19,8 @@ export default function DarkLightModeBtn({}: Props) {
 			<button
 				onClick={toggleTheme}
 				className={cn(
-					'flex h5 w-10 bg-gray-500 hover:bg-primary cursor-pointer items-center rounded-full p-1',
-					{ 'bg-primary': theme == 'dark' }
+					'flex h5 w-10 bg-gray-500 hover:bg-[#1CB854] cursor-pointer items-center rounded-full p-1',
+					{ 'bg-[#1CB854]': theme == 'dark' }
 				)}
 			>
 				<div
@@ -32,12 +31,6 @@ export default function DarkLightModeBtn({}: Props) {
 					)}
 				></div>
 			</button>
-			<Moon
-				onClick={toggleTheme}
-				className={cn('text-gray-400 hover:text-primary', {
-					'text-primary': theme == 'dark',
-				})}
-			/>
 		</div>
 	)
 }

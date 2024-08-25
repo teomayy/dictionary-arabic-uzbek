@@ -1,23 +1,32 @@
-import { Book } from 'lucide-react'
-import SelectFont from './fontChanger/SelectFont'
-import DarkLightModeBtn from './modeChange/DarkLightModeBtn'
+import dictionaryData from '../../../public/dictionary.json' assert { type: 'json' }
+import SearchBox from './search/SearchBox'
+import LanguageSwitcher from './switchers/LanguageSwitcher'
+interface DictionaryEntry {
+	id: number
+	letters: string
+	long_words: string
+	meaning: string
+	other: string
+	plural_letters: string
+	root: string
+	short_meaning: string
+	short_words: string
+	word: string
+}
+
+const dictionary: DictionaryEntry[] = dictionaryData as DictionaryEntry[]
+
+const getFirstWord = (input: string): string => {
+	const words = input.trim().split(' ')
+	return words[0] || ''
+}
 
 export function Header() {
-	const handleResetClick = () => {
-		window.location.href = '/i'
-	}
-
 	return (
 		<header>
-			<div className='w-full flex justify-between items-center'>
-				<button onClick={handleResetClick}>
-					<Book className='text-4xl text-gray-400 w-20 h-10' />
-				</button>
-
-				<div className='flex gap-4 items-center'>
-					<SelectFont />
-					<DarkLightModeBtn />
-				</div>
+			<div className='flex flex-col gap-5 bg-white dark:bg-[#161B26] p-2'>
+				<SearchBox />
+				<LanguageSwitcher />
 			</div>
 		</header>
 	)

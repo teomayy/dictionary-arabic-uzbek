@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 import Provider from './Provider'
 import './globals.css'
 
@@ -23,6 +24,7 @@ export default function RootLayout({
 					className={cn('dark:bg-black/95 dark:text-white', inter.className)}
 				>
 					{children}
+					<Toaster richColors closeButton theme='system' duration={1500} />
 				</body>
 			</Provider>
 		</html>
