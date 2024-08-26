@@ -9,8 +9,6 @@ export function MenuItem({ item }: { item: IMenuItem }) {
 	const pathname = usePathname()
 	const isActive = pathname === item.link
 
-	console.log('LINK', pathname)
-
 	return (
 		<div className={`cursor-pointer ${isActive ? 'text-[#149E53]' : ' '}`}>
 			<Link

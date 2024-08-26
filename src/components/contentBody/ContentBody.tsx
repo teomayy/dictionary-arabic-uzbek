@@ -32,7 +32,7 @@ export const ContentBody: React.FC = () => {
 	}
 
 	return (
-		<div className='w-full dark:bg-[#1F242F]'>
+		<div className='w-full h-screen dark:bg-[#1F242F]'>
 			<ul className='divide-y p-2'>
 				{recommendations.map(word => (
 					<li

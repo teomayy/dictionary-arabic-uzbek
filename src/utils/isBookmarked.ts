@@ -1,6 +1,9 @@
 export const BOOKMARKS_LOCALSTORAGE_KEY = 'arabic_uzbek_dictionary'
 
 export function isBookmarked(id: number): boolean {
+	if (typeof window === 'undefined') {
+		return false
+	}
 	const bookmarks = localStorage.getItem(BOOKMARKS_LOCALSTORAGE_KEY)
 	if (!bookmarks) {
 		return false
