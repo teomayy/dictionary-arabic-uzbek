@@ -6,16 +6,16 @@ export const MENU: IMenuItem[] = [
 	{
 		icon: Home,
 		link: DASHBOARD_PAGES.HOME,
-		name: 'Dashboard',
+		name: 'Asosiy',
 	},
 	{
 		icon: Bookmark,
 		link: DASHBOARD_PAGES.BOOKMARK,
-		name: 'Bookmark',
+		name: 'Saqlanganlar',
 	},
 	{
 		icon: Settings,
 		link: DASHBOARD_PAGES.SETTINGS,
-		name: 'Settings',
+		name: 'Sozlamalar',
 	},
 ]
