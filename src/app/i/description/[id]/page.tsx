@@ -3,20 +3,32 @@ import CopyButton from '@/components/buttons/CopyButton'
 import ErrorPage from '@/components/error/ErrorPage'
 import SimilarWords from '@/components/similar-words/SimilarWords'
 import { IWord } from '@/models/dictionary'
-import { getDictionary } from '@/services/dictionary-service'
+import {
+	getDictionary,
+	getRecommendations,
+} from '@/services/dictionary-service'
 import { Bookmark } from 'lucide-react'
 interface DescriptionProps {
 	params: { id: string }
 }
 
-async function getWordByID(id: string): Promise<IWord | null> {
+async function getWordByID(
+	id: string
+): Promise<{ word: IWord | null; similarWords: IWord[] }> {
 	const dictionary = getDictionary()
-	const word = dictionary.find(entry => entry.id && entry.id.toString() === id)
-	return word || null
+	const word =
+		dictionary.find(entry => entry.id && entry.id.toString() === id) || null
+
+	let similarWords: IWord[] = []
+
+	if (word) {
+		similarWords = getRecommendations(word.word, dictionary, 10)
+	}
+	return { word, similarWords }
 }
 
 export default async function DescriptionPage({ params }: DescriptionProps) {
-	const word = await getWordByID(params.id)
+	const { word, similarWords } = await getWordByID(params.id)
 
 	if (!word) {
 		//TODO NOT FOUND PAGE
@@ -39,7 +51,7 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 						<Bookmark className='h-6 w-6 cursor-pointer dark:hover:text-slate-400' />
 					</div>
 				</div>
-				<SimilarWords />
+				<SimilarWords words={similarWords} />
 			</div>
 		</div>
 	)
