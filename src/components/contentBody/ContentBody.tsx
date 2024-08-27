@@ -7,19 +7,23 @@ import { useStore } from '@/store/useStore'
 import { addBookmark, isBookmarked, removeBookmark } from '@/utils/isBookmarked'
 import { BookmarkIcon } from 'lucide-react'
 import Link from 'next/link'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export const ContentBody: React.FC = () => {
-	const { searchTerm } = useStore()
+	const { searchTerm, language } = useStore()
 	const wordList = getDictionary()
 
 	const recommendations = useMemo(() => {
 		return getRecommendations(searchTerm, wordList, 13)
 	}, [wordList, searchTerm])
 
-	const [bookmarkedWords, setBookmarkedWords] = useState<number[]>(() =>
-		recommendations.filter(word => isBookmarked(word.id)).map(word => word.id)
-	)
+	const [bookmarkedWords, setBookmarkedWords] = useState<number[]>([])
+
+	useEffect(() => {
+		setBookmarkedWords(
+			recommendations.filter(word => isBookmarked(word.id)).map(word => word.id)
+		)
+	}, [recommendations])
 
 	const handleBookmarkClick = (id: number) => {
 		if (isBookmarked(id)) {
@@ -45,7 +49,11 @@ export const ContentBody: React.FC = () => {
 								word.id
 							)}`}
 						>
-							<span className='text-lg'>{word.word}</span>
+							<span className='text-lg'>
+								{language === 'arabic'
+									? word.word
+									: getFirstWord(word.short_words)}
+							</span>
 						</Link>
 						<button onClick={() => handleBookmarkClick(word.id)}>
 							<BookmarkIcon
@@ -61,4 +69,9 @@ export const ContentBody: React.FC = () => {
 			</ul>
 		</div>
 	)
+}
+
+const getFirstWord = (input: string): string => {
+	const words = input.trim().split(' ')
+	return words[0] || ''
 }

@@ -34,17 +34,72 @@ function getLevenshteinDistance(a: string, b: string): number {
 	return matrix[b.length][a.length]
 }
 
+const getFirstWord = (input: string): string => {
+	const words = input.trim().split(' ')
+	return words[0] || ''
+}
+
 export function getRecommendations(
 	input: string,
 	dictionary: TDictionary,
 	n: number
 ): IWord[] {
-	const wordsWithDistance = dictionary.map(entry => {
-		const distance = getLevenshteinDistance(input, entry.word || '')
-		return { ...entry, distance }
-	})
+	const lowerInput = input.toLowerCase()
 
-	wordsWithDistance.sort((a, b) => a.distance - b.distance)
+	const exactMatches = dictionary.filter(
+		entry =>
+			(entry.word && entry.word.toLowerCase() === lowerInput) ||
+			(entry.letters && entry.letters.toLowerCase() === lowerInput) ||
+			(entry.short_words &&
+				entry.short_words.toLowerCase().includes(lowerInput)) ||
+			(entry.short_words &&
+				getFirstWord(entry.short_words).toLowerCase() === lowerInput)
+	)
 
-	return wordsWithDistance.slice(0, n)
+	const closeMatches = dictionary
+		.filter(
+			entry =>
+				!(entry.word && entry.word.toLowerCase() === lowerInput) &&
+				!(entry.letters && entry.letters.toLowerCase() === lowerInput) &&
+				!(
+					entry.short_words &&
+					entry.short_words.toLowerCase().includes(lowerInput)
+				) &&
+				!(
+					entry.short_words &&
+					getFirstWord(entry.short_words).toLowerCase() === lowerInput
+				)
+		)
+		.map(entry => {
+			const wordDistance = getLevenshteinDistance(
+				lowerInput,
+				entry.word?.toLowerCase() ?? ''
+			)
+			const lettersDistance = getLevenshteinDistance(
+				lowerInput,
+				entry.letters?.toLowerCase() ?? ''
+			)
+			const shortWordDistance = getLevenshteinDistance(
+				lowerInput,
+				entry.short_words?.toLowerCase() ?? ''
+			)
+			const FirstWordOfShortWordDistance = getLevenshteinDistance(
+				lowerInput,
+				getFirstWord(entry.short_meaning)?.toLowerCase() ?? ''
+			)
+
+			const minDistance = Math.min(
+				wordDistance,
+				lettersDistance,
+				shortWordDistance,
+				FirstWordOfShortWordDistance
+			)
+
+			return { ...entry, distance: minDistance }
+		})
+		.sort((a, b) => a.distance - b.distance)
+
+	const combinedResults = [...exactMatches, ...closeMatches]
+
+	return combinedResults.slice(0, n)
 }

@@ -9,6 +9,7 @@ import { Bookmark } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
+import { useStore } from '@/store/useStore'
 import ErrorPage from '../error/ErrorPage'
 import Loader from '../loader/Loader'
 
@@ -16,6 +17,7 @@ const BookmarksList: React.FC = () => {
 	const [bookmarkedWords, setBookmarkedWords] = useState<number[]>([])
 	const [words, setWords] = useState<IWord[]>([])
 	const [isLoading, setIsLoading] = useState<boolean>(true)
+	const { language } = useStore()
 
 	useEffect(() => {
 		const bookmarks = localStorage.getItem(BOOKMARKS_LOCALSTORAGE_KEY)
@@ -59,7 +61,11 @@ const BookmarksList: React.FC = () => {
 									word.id
 								)}`}
 							>
-								<span className='text-lg'>{word.word}</span>
+								<span className='text-lg'>
+									{language === 'arabic'
+										? word.word
+										: getFirstWord(word.short_words)}
+								</span>
 							</Link>
 							<button onClick={() => handleRemoveBookmark(word.id)}>
 								<Bookmark className='h-6 w-6 fill-[#149E53] text-[#149E53]' />
@@ -72,6 +78,11 @@ const BookmarksList: React.FC = () => {
 			)}
 		</div>
 	)
+}
+
+const getFirstWord = (input: string): string => {
+	const words = input.trim().split(' ')
+	return words[0] || ''
 }
 
 export default BookmarksList
