@@ -36,7 +36,7 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 	}
 
 	return (
-		<div className='max-w-[689px] h-screen m-auto dark:bg-primary bg-[#EAEEF2]'>
+		<div className='max-w-[689px] min-h-screen m-auto dark:bg-primary bg-[#EAEEF2]'>
 			<div className='relative flex items-center p-5 dark:bg-secondary bg-white'>
 				<ClientBackButton />
 				<h1 className='mx-auto text-2xl'>Masabiyh</h1>

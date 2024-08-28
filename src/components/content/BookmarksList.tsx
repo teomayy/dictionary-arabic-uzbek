@@ -44,6 +44,7 @@ const BookmarksList: React.FC = () => {
 		removeBookmark(id)
 		setBookmarkedWords(prev => prev.filter(bookmarkId => bookmarkId !== id))
 	}
+
 	return (
 		<div className='w-full dark:bg-[#1F242F]'>
 			{isLoading ? (

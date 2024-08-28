@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes'
 export default function SettingsPage() {
 	const { theme } = useTheme()
 	return (
-		<div className='bg-[#EAEEF2] dark:bg-primary h-screen pt-2 max-w-[689px] mx-auto'>
+		<div className='bg-[#EAEEF2] dark:bg-primary min-h-screen pt-2 max-w-[689px] mx-auto'>
 			<div
 				className={cn('flex justify-between m-4 p-4 bg-white rounded-xl', {
 					'bg-secondary': theme === 'dark',
