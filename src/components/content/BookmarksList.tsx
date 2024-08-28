@@ -46,7 +46,7 @@ const BookmarksList: React.FC = () => {
 	}
 
 	return (
-		<div className='w-full dark:bg-[#1F242F]'>
+		<div className='w-full h-full  grow dark:bg-[#1F242F]'>
 			{isLoading ? (
 				<Loader />
 			) : words.length > 0 ? (

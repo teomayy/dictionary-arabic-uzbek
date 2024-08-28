@@ -49,14 +49,8 @@ export function getRecommendations(
 	for (const word of dictionary) {
 		const matchesWord = word.word?.includes(input)
 		const matchesLetters = word.letters?.includes(input)
-		const matchesShortWords = word.short_words?.includes(input)
 		const matchesFirstWord = getFirstWord(word.short_words).includes(input)
-		if (
-			matchesWord ||
-			matchesLetters ||
-			matchesShortWords ||
-			matchesFirstWord
-		) {
+		if (matchesWord || matchesLetters || matchesFirstWord) {
 			res.push(word)
 		}
 		if (res.length >= n) {
