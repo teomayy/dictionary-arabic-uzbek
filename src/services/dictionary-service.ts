@@ -35,7 +35,8 @@ function getLevenshteinDistance(a: string, b: string): number {
 }
 
 const getFirstWord = (input: string): string => {
-	const words = input.trim().split(' ')
+	if (!input) return ''
+	const words = input?.trim().split(' ')
 	return words[0] || ''
 }
 
@@ -44,28 +45,37 @@ export function getRecommendations(
 	dictionary: TDictionary,
 	n: number
 ): IWord[] {
-	const res = [];
+	const res: IWord[] = []
 	for (const word of dictionary) {
-		if (word.word?.includes(input)) {
+		const matchesWord = word.word?.includes(input)
+		const matchesLetters = word.letters?.includes(input)
+		const matchesShortWords = word.short_words?.includes(input)
+		const matchesFirstWord = getFirstWord(word.short_words).includes(input)
+		if (
+			matchesWord ||
+			matchesLetters ||
+			matchesShortWords ||
+			matchesFirstWord
+		) {
 			res.push(word)
 		}
 		if (res.length >= n) {
-			break;
+			break
 		}
 	}
-	return res;
+	return res
 }
 
 const cachedRecommendationsFactory = (): typeof getRecommendations => {
-	const hMap = new Map();
-	return function(...args: Parameters<typeof getRecommendations>) {
-		const hash = args[0] + args[2];
+	const hMap = new Map()
+	return function (...args: Parameters<typeof getRecommendations>) {
+		const hash = args[0] + args[2]
 		if (hMap.has(hash)) {
-			return hMap.get(hash);
+			return hMap.get(hash)
 		}
-		const res = getRecommendations(...args);
-		hMap.set(hash, res);
-		return res;
+		const res = getRecommendations(...args)
+		hMap.set(hash, res)
+		return res
 	}
 }
-export const getCachedRecomenndations = cachedRecommendationsFactory();
+export const getCachedRecomenndations = cachedRecommendationsFactory()
