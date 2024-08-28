@@ -44,62 +44,28 @@ export function getRecommendations(
 	dictionary: TDictionary,
 	n: number
 ): IWord[] {
-	const lowerInput = input.toLowerCase()
-
-	const exactMatches = dictionary.filter(
-		entry =>
-			(entry.word && entry.word.toLowerCase() === lowerInput) ||
-			(entry.letters && entry.letters.toLowerCase() === lowerInput) ||
-			(entry.short_words &&
-				entry.short_words.toLowerCase().includes(lowerInput)) ||
-			(entry.short_words &&
-				getFirstWord(entry.short_words).toLowerCase() === lowerInput)
-	)
-
-	const closeMatches = dictionary
-		.filter(
-			entry =>
-				!(entry.word && entry.word.toLowerCase() === lowerInput) &&
-				!(entry.letters && entry.letters.toLowerCase() === lowerInput) &&
-				!(
-					entry.short_words &&
-					entry.short_words.toLowerCase().includes(lowerInput)
-				) &&
-				!(
-					entry.short_words &&
-					getFirstWord(entry.short_words).toLowerCase() === lowerInput
-				)
-		)
-		.map(entry => {
-			const wordDistance = getLevenshteinDistance(
-				lowerInput,
-				entry.word?.toLowerCase() ?? ''
-			)
-			const lettersDistance = getLevenshteinDistance(
-				lowerInput,
-				entry.letters?.toLowerCase() ?? ''
-			)
-			const shortWordDistance = getLevenshteinDistance(
-				lowerInput,
-				entry.short_words?.toLowerCase() ?? ''
-			)
-			const FirstWordOfShortWordDistance = getLevenshteinDistance(
-				lowerInput,
-				getFirstWord(entry.short_meaning)?.toLowerCase() ?? ''
-			)
-
-			const minDistance = Math.min(
-				wordDistance,
-				lettersDistance,
-				shortWordDistance,
-				FirstWordOfShortWordDistance
-			)
-
-			return { ...entry, distance: minDistance }
-		})
-		.sort((a, b) => a.distance - b.distance)
-
-	const combinedResults = [...exactMatches, ...closeMatches]
-
-	return combinedResults.slice(0, n)
+	const res = [];
+	for (const word of dictionary) {
+		if (word.word?.includes(input)) {
+			res.push(word)
+		}
+		if (res.length >= n) {
+			break;
+		}
+	}
+	return res;
 }
+
+const cachedRecommendationsFactory = (): typeof getRecommendations => {
+	const hMap = new Map();
+	return function(...args: Parameters<typeof getRecommendations>) {
+		const hash = args[0] + args[2];
+		if (hMap.has(hash)) {
+			return hMap.get(hash);
+		}
+		const res = getRecommendations(...args);
+		hMap.set(hash, res);
+		return res;
+	}
+}
+export const getCachedRecomenndations = cachedRecommendationsFactory();
