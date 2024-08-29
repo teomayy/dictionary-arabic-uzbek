@@ -46,10 +46,18 @@ export function getRecommendations(
 	n: number
 ): IWord[] {
 	const res: IWord[] = []
+	const lowerInput = input.toLowerCase()
+
 	for (const word of dictionary) {
-		const matchesWord = word.word?.includes(input)
-		const matchesLetters = word.letters?.includes(input)
-		const matchesFirstWord = getFirstWord(word.short_words).includes(input)
+		const lowerWord = word.word && word?.word.toLowerCase()
+		const lowerLetters = word.letters && word?.letters.toLowerCase()
+		const lowerFirstWord = getFirstWord(
+			word.short_words && word?.short_words
+		).toLowerCase()
+
+		const matchesWord = lowerWord?.includes(lowerInput)
+		const matchesLetters = lowerLetters?.includes(lowerInput)
+		const matchesFirstWord = lowerFirstWord?.includes(lowerInput)
 		if (matchesWord || matchesLetters || matchesFirstWord) {
 			res.push(word)
 		}
