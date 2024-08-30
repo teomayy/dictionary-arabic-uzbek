@@ -49,11 +49,9 @@ export function getRecommendations(
 	const lowerInput = input.toLowerCase()
 
 	for (const word of dictionary) {
-		const lowerWord = word.word && word?.word.toLowerCase()
-		const lowerLetters = word.letters && word?.letters.toLowerCase()
-		const lowerFirstWord = getFirstWord(
-			word.short_words && word?.short_words
-		).toLowerCase()
+		const lowerWord = word.word?.toLowerCase()
+		const lowerLetters = word.letters?.toLowerCase()
+		const lowerFirstWord = getFirstWord(word.short_words)?.toLowerCase()
 
 		const matchesWord = lowerWord?.includes(lowerInput)
 		const matchesLetters = lowerLetters?.includes(lowerInput)

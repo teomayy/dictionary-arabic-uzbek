@@ -8,6 +8,7 @@ import {
 	getRecommendations,
 } from '@/services/dictionary-service'
 import { Bookmark } from 'lucide-react'
+
 interface DescriptionProps {
 	params: { id: string }
 }
@@ -16,8 +17,7 @@ async function getWordByID(
 	id: string
 ): Promise<{ word: IWord | null; similarWords: IWord[] }> {
 	const dictionary = getDictionary()
-	const word =
-		dictionary.find(entry => entry.id && entry.id.toString() === id) || null
+	const word = dictionary.find(entry => entry.id?.toString() === id) || null
 
 	let similarWords: IWord[] = []
 
@@ -31,7 +31,6 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 	const { word, similarWords } = await getWordByID(params.id)
 
 	if (!word) {
-		//TODO NOT FOUND PAGE
 		return <ErrorPage message="So'z topilmadi" />
 	}
 
