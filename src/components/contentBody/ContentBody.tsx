@@ -2,13 +2,13 @@ import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import {
 	getCachedRecomenndations,
 	getDictionary,
-	getRecommendations,
 } from '@/services/dictionary-service'
 import { useStore } from '@/store/useStore'
 import { addBookmark, isBookmarked, removeBookmark } from '@/utils/isBookmarked'
 import { BookmarkIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import SearchBox from '../header/search/SearchBox'
 
 export const ContentBody: React.FC = () => {
 	const { searchTerm, language } = useStore()
@@ -37,8 +37,9 @@ export const ContentBody: React.FC = () => {
 	}
 
 	return (
-		<div className='w-full min-h-screen dark:bg-[#1F242F]'>
-			<ul className='divide-y p-2'>
+		<div className='w-full min-h-screen md:p-16 dark:bg-[#1F242F]'>
+			<SearchBox />
+			<ul className='md:hidden block divide-y p-2'>
 				{recommendations.map(word => (
 					<li
 						key={word.id}
@@ -58,15 +59,48 @@ export const ContentBody: React.FC = () => {
 						</Link>
 						<button onClick={() => handleBookmarkClick(word.id)}>
 							<BookmarkIcon
-								className={`h-6 w-6 hover:text-[#149E53] ${bookmarkedWords.includes(word.id)
-									? 'fill-[#149E53] text-[#149E53]'
-									: ''
-									}`}
+								className={`h-6 w-6 hover:text-[#149E53] ${
+									bookmarkedWords.includes(word.id)
+										? 'fill-[#149E53] text-[#149E53]'
+										: ''
+								}`}
 							/>
 						</button>
 					</li>
 				))}
 			</ul>
+			{searchTerm && (
+				<ul className='hidden md:block divide-y p-2'>
+					{recommendations.map(word => (
+						<li
+							key={word.id}
+							className='flex justify-between items-center dark:border-none hover:bg-white dark:hover:bg-slate-400'
+						>
+							<Link
+								className='w-full p-4 h-full cursor-pointer flex justify-between'
+								href={`${DASHBOARD_PAGES.DESCRIPTION}${encodeURIComponent(
+									word.id
+								)}`}
+							>
+								<span className='text-lg'>
+									{language === 'arabic'
+										? word.word
+										: getFirstWord(word.short_words)}
+								</span>
+							</Link>
+							<button onClick={() => handleBookmarkClick(word.id)}>
+								<BookmarkIcon
+									className={`h-6 w-6 hover:text-[#149E53] ${
+										bookmarkedWords.includes(word.id)
+											? 'fill-[#149E53] text-[#149E53]'
+											: ''
+									}`}
+								/>
+							</button>
+						</li>
+					))}
+				</ul>
+			)}
 		</div>
 	)
 }

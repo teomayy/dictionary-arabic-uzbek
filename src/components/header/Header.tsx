@@ -16,17 +16,21 @@ interface DictionaryEntry {
 
 const dictionary: DictionaryEntry[] = dictionaryData as DictionaryEntry[]
 
-const getFirstWord = (input: string): string => {
-	const words = input.trim().split(' ')
-	return words[0] || ''
-}
-
 export function Header() {
 	return (
 		<header>
-			<div className='flex flex-col gap-5 bg-white dark:bg-[#161B26] p-2'>
+			<div className='md:hidden flex flex-col gap-5 bg-white dark:bg-[#161B26] p-2'>
 				<SearchBox />
 				<LanguageSwitcher />
+			</div>
+			<div className='hidden md:flex bg-white dark:bg-[#161B26]'>
+				<img src='bg-header.png' alt='' className='w-full h-56 object-cover' />
+				<span className='text-2xl absolute left-[30%] top-[20%] text-[#149E53]'>
+					Masabiyh
+				</span>
+				<span className='text-2xl absolute left-[55%] top-[20%] text-[#149E53]'>
+					Arabcha lug'at
+				</span>
 			</div>
 		</header>
 	)

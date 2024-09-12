@@ -6,7 +6,7 @@ import { MENU } from './menu.data'
 // Yoki listni heightini 100wh-menuHeight ga qo'yish kerak.
 export function Footer() {
 	return (
-		<div className='sticky w-full max-w-[689px] bottom-0 bg-[white] dark:bg-[#161B26] shadow-md'>
+		<div className='sticky md:hidden w-full max-w-[689px] bottom-0 bg-[white] dark:bg-[#161B26] shadow-md'>
 			<div className='flex justify-around px-6 py-2 max-w-full mx-auto'>
 				{MENU.map(item => (
 					<MenuItem item={item} key={item.link} />

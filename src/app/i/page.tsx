@@ -11,9 +11,9 @@ export default function DashboardPage() {
 
 	return (
 		<div
-			className={cn(`max-w-[689px] flex bg-[#EAEEF2] flex-col  mx-auto`, {
-				'bg-[#161B26]': theme === 'dark',
-			})}
+			className={cn(
+				`md:max-w-full max-w-[689px] flex bg-[#EAEEF2] flex-col  mx-auto dark:bg-[#161B26]`
+			)}
 		>
 			<Header />
 			<Loader />
