@@ -38,7 +38,10 @@ export const ContentBody: React.FC = () => {
 
 	return (
 		<div className='w-full min-h-screen md:p-16 dark:bg-[#1F242F]'>
-			<SearchBox />
+			<div className='hidden md:block'>
+				<SearchBox />
+			</div>
+
 			<ul className='md:hidden block divide-y p-2'>
 				{recommendations.map(word => (
 					<li
