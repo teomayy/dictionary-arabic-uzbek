@@ -3,10 +3,7 @@ import CopyButton from '@/components/buttons/CopyButton'
 import ErrorPage from '@/components/error/ErrorPage'
 import SimilarWords from '@/components/similar-words/SimilarWords'
 import { IWord } from '@/models/dictionary'
-import {
-	getDictionary,
-	getRecommendations,
-} from '@/services/dictionary-service'
+import { findWordByRoot, getDictionary } from '@/services/dictionary-service'
 import { Bookmark } from 'lucide-react'
 
 interface DescriptionProps {
@@ -22,7 +19,7 @@ async function getWordByID(
 	let similarWords: IWord[] = []
 
 	if (word) {
-		similarWords = getRecommendations(word.word, dictionary, 10)
+		similarWords = findWordByRoot(word.root, dictionary, 10)
 	}
 	return { word, similarWords }
 }
@@ -35,7 +32,7 @@ export default async function DescriptionPage({ params }: DescriptionProps) {
 	}
 
 	return (
-		<div className='max-w-[689px] min-h-screen m-auto dark:bg-primary bg-[#EAEEF2]'>
+		<div className='md:max-w-full max-w-[689px] min-h-screen m-auto dark:bg-primary bg-[#EAEEF2]'>
 			<div className='relative flex items-center p-5 dark:bg-secondary bg-white'>
 				<ClientBackButton />
 				<h1 className='mx-auto text-2xl'>Masabiyh</h1>
