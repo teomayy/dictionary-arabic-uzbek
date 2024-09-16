@@ -60,7 +60,7 @@ const SimilarWords: React.FC<SimilarWordsProps> = ({ words }) => {
 							</Link>
 							<button onClick={() => handleBookmarkClick(word.id)}>
 								<BookmarkIcon
-									className={`h-6 w-6 hover:text-[#149E53] ${
+									className={`h-6 w-6 md:hidden block hover:text-[#149E53] ${
 										bookmarkedWords.includes(word.id)
 											? 'fill-[#149E53] text-[#149E53]'
 											: ''
