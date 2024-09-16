@@ -23,14 +23,12 @@ export function Header() {
 				<SearchBox />
 				<LanguageSwitcher />
 			</div>
-			<div className='hidden md:flex bg-white dark:bg-[#161B26]'>
-				<img src='bg-header.png' alt='' className='w-full h-56 object-cover' />
-				<span className='text-2xl absolute left-[30%] top-[20%] text-[#149E53]'>
-					Masabiyh
-				</span>
-				<span className='text-2xl absolute left-[55%] top-[20%] text-[#149E53]'>
-					Arabcha lug'at
-				</span>
+			<div className='hidden md:block relative bg-white dark:bg-[#161B26]'>
+				<img
+					src='bg-header.JPG'
+					alt=''
+					className='w-full h-56 lg:h-64 object-cover'
+				/>
 			</div>
 		</header>
 	)

@@ -9,6 +9,7 @@ import { BookmarkIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import SearchBox from '../header/search/SearchBox'
+import LanguageSwitcher from '../header/switchers/LanguageSwitcher'
 
 export const ContentBody: React.FC = () => {
 	const { searchTerm, language } = useStore()
@@ -38,8 +39,9 @@ export const ContentBody: React.FC = () => {
 
 	return (
 		<div className='w-full min-h-screen md:p-16 dark:bg-[#1F242F]'>
-			<div className='hidden md:block'>
+			<div className='hidden md:flex gap-4 flex-col'>
 				<SearchBox />
+				<LanguageSwitcher />
 			</div>
 
 			<ul className='md:hidden block divide-y p-2'>
@@ -62,7 +64,7 @@ export const ContentBody: React.FC = () => {
 						</Link>
 						<button onClick={() => handleBookmarkClick(word.id)}>
 							<BookmarkIcon
-								className={`h-6 w-6 hover:text-[#149E53] ${
+								className={`h-6 w-6  hover:text-[#149E53] ${
 									bookmarkedWords.includes(word.id)
 										? 'fill-[#149E53] text-[#149E53]'
 										: ''
@@ -91,7 +93,7 @@ export const ContentBody: React.FC = () => {
 										: getFirstWord(word.short_words)}
 								</span>
 							</Link>
-							<button onClick={() => handleBookmarkClick(word.id)}>
+							{/* <button onClick={() => handleBookmarkClick(word.id)}>
 								<BookmarkIcon
 									className={`h-6 w-6 hover:text-[#149E53] ${
 										bookmarkedWords.includes(word.id)
@@ -99,7 +101,7 @@ export const ContentBody: React.FC = () => {
 											: ''
 									}`}
 								/>
-							</button>
+							</button> */}
 						</li>
 					))}
 				</ul>

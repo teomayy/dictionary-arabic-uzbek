@@ -9,7 +9,7 @@ export default function LanguageSwitcher() {
 
 	return (
 		<div className=' flex w-full items-center justify-center '>
-			<div className='h-9 p-1 items-center relative flex w-full dark:bg-[#333741] bg-[#EAEEF2] rounded-xl z-10 '>
+			<div className='h-9 p-1 items-center relative flex w-full dark:bg-[#333741] md:bg-gray-200 bg-[#EAEEF2] rounded-xl z-10 '>
 				<button
 					className={`w-1/2 py-1 text-center rounded-xl transition-all duration-300  z-10 ${
 						language === 'arabic' ? 'dark:bg-[#161B26] bg-white shadow' : ''
