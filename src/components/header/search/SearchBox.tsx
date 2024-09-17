@@ -7,11 +7,16 @@ export default function SearchBox() {
 	const { searchTerm, setSearchTerm } = useStore()
 	const [showKeyboard, setShowKeyboard] = useState<boolean>(false)
 
+	const allowedCharacters = /^[a-zA-Z\u0600-\u06FF\s]*$/
+
 	const handleInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
 		input => {
-			setSearchTerm(input.target.value)
+			const { value } = input.target
+			if (allowedCharacters.test(value)) {
+				setSearchTerm(value)
+			}
 		},
-		[]
+		[setSearchTerm]
 	)
 
 	const toggleKeyboard = () => {
