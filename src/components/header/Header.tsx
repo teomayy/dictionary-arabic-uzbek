@@ -25,9 +25,9 @@ export function Header() {
 			</div>
 			<div className='hidden md:block relative bg-white dark:bg-[#161B26]'>
 				<img
-					src='bg-header.JPG'
+					src='bg-header.jpg'
 					alt=''
-					className='w-full h-56 lg:h-64 object-cover'
+					className='w-full h-56 lg:h-72 object-cover'
 				/>
 			</div>
 		</header>
