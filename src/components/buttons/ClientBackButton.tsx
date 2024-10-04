@@ -7,7 +7,7 @@ const ClientBackButton: React.FC = () => {
 	const router = useRouter()
 
 	return (
-		<button onClick={() => router.back()}>
+		<button onClick={() => router.push('/i')}>
 			<ChevronLeft />
 		</button>
 	)

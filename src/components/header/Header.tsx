@@ -21,6 +21,7 @@ export function Header() {
 		<header>
 			<div className='md:hidden flex flex-col gap-5 bg-white dark:bg-[#161B26] p-2'>
 				<SearchBox />
+
 				<LanguageSwitcher />
 			</div>
 			<div className='hidden md:block relative bg-white dark:bg-[#161B26]'>

@@ -1,5 +1,7 @@
+import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import { useStore } from '@/store/useStore'
 import { Keyboard, Search } from 'lucide-react'
+import Link from 'next/link'
 import { ChangeEventHandler, useCallback, useState } from 'react'
 import ArabicKeyboard from './keyboard/ArabicKeyboard'
 
@@ -61,6 +63,9 @@ export default function SearchBox() {
 					<ArabicKeyboard onChange={setSearchTerm} value={searchTerm} />
 				</div>
 			)}
+			<Link className='ml-4 hidden md:block' href={DASHBOARD_PAGES.BOOKMARK}>
+				saqlanganlar
+			</Link>
 		</div>
 	)
 }

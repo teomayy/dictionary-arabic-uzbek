@@ -16,7 +16,8 @@ export function getRecommendations(
 	dictionary: TDictionary,
 	n: number
 ): IWord[] {
-	const res: IWord[] = []
+	const exactMatches: IWord[] = []
+	const partialMatches: IWord[] = []
 	const lowerInput = input.toLowerCase()
 
 	for (const word of dictionary) {
@@ -24,17 +25,27 @@ export function getRecommendations(
 		const lowerLetters = word.letters?.toLowerCase()
 		const lowerFirstWord = getFirstWord(word.short_words)?.toLowerCase()
 
-		const matchesWord = lowerWord?.includes(lowerInput)
-		const matchesLetters = lowerLetters?.includes(lowerInput)
-		const matchesFirstWord = lowerFirstWord?.includes(lowerInput)
-		if (matchesWord || matchesLetters || matchesFirstWord) {
-			res.push(word)
+		const exactMatch =
+			lowerWord === lowerInput ||
+			lowerLetters === lowerInput ||
+			lowerFirstWord === lowerInput
+
+		const partialMatch =
+			lowerWord?.includes(lowerInput) ||
+			lowerLetters?.includes(lowerInput) ||
+			lowerFirstWord?.includes(lowerInput)
+
+		if (exactMatch) {
+			exactMatches.push(word)
+		} else if (partialMatch) {
+			partialMatches.push(word)
 		}
-		if (res.length >= n) {
+
+		if (exactMatches.length + partialMatches.length >= n) {
 			break
 		}
 	}
-	return res
+	return [...exactMatches, ...partialMatches].slice(0, n)
 }
 
 const cachedRecommendationsFactory = (): typeof getRecommendations => {

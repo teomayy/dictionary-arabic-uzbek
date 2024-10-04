@@ -5,7 +5,7 @@ import { Header } from '@/components/header/Header'
 
 export default function bookmarkPage() {
 	return (
-		<div className='flex bg-[#EAEEF2] md:max-w-full max-w-[689px] dark:bg-[#1F242F] mx-auto min-h-screen flex-col '>
+		<div className='flex bg-[#EAEEF2] md:max-w-full dark:bg-[#1F242F] mx-auto min-h-screen flex-col '>
 			<Header />
 			<BookmarksList />
 			<Footer />

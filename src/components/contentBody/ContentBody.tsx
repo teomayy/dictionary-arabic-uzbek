@@ -38,13 +38,13 @@ export const ContentBody: React.FC = () => {
 	}
 
 	return (
-		<div className='w-full min-h-screen md:p-16 dark:bg-[#1F242F]'>
+		<div className='w-full min-h-screen md:py-10 md:px-32 dark:bg-[#1F242F]'>
 			<div className='hidden md:flex gap-4 flex-col'>
 				<SearchBox />
 				<LanguageSwitcher />
 			</div>
 
-			<ul className='md:hidden block divide-y p-2'>
+			<ul className='divide-y p-2'>
 				{recommendations.map(word => (
 					<li
 						key={word.id}
@@ -56,11 +56,14 @@ export const ContentBody: React.FC = () => {
 								word.id
 							)}`}
 						>
-							<span className='text-lg'>
-								{language === 'arabic'
-									? word.word
-									: getFirstWord(word.short_words)}
-							</span>
+							<div className='flex flex-col'>
+								<span className='text-lg'>
+									{language === 'arabic'
+										? word.word
+										: getFirstWord(word.short_words)}
+								</span>
+								<span>{word.short_meaning}</span>
+							</div>
 						</Link>
 						<button onClick={() => handleBookmarkClick(word.id)}>
 							<BookmarkIcon
@@ -74,38 +77,6 @@ export const ContentBody: React.FC = () => {
 					</li>
 				))}
 			</ul>
-			{searchTerm && (
-				<ul className='hidden md:block divide-y p-2'>
-					{recommendations.map(word => (
-						<li
-							key={word.id}
-							className='flex justify-between items-center dark:border-none hover:bg-white dark:hover:bg-slate-400'
-						>
-							<Link
-								className='w-full p-4 h-full cursor-pointer flex justify-between'
-								href={`${DASHBOARD_PAGES.DESCRIPTION}${encodeURIComponent(
-									word.id
-								)}`}
-							>
-								<span className='text-lg'>
-									{language === 'arabic'
-										? word.word
-										: getFirstWord(word.short_words)}
-								</span>
-							</Link>
-							{/* <button onClick={() => handleBookmarkClick(word.id)}>
-								<BookmarkIcon
-									className={`h-6 w-6 hover:text-[#149E53] ${
-										bookmarkedWords.includes(word.id)
-											? 'fill-[#149E53] text-[#149E53]'
-											: ''
-									}`}
-								/>
-							</button> */}
-						</li>
-					))}
-				</ul>
-			)}
 		</div>
 	)
 }
