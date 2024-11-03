@@ -7,7 +7,7 @@ import { MENU } from './menu.data'
 export function Footer() {
 	return (
 		<div className='sticky md:hidden max-w-full bottom-0 bg-[white] dark:bg-[#161B26] shadow-md'>
-			<div className='flex justify-around px-6 py-2 max-w-full mx-auto'>
+			<div className='flex justify-around max-w-full mx-auto'>
 				{MENU.map(item => (
 					<MenuItem item={item} key={item.link} />
 				))}

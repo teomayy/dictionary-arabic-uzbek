@@ -13,10 +13,10 @@ export function MenuItem({ item }: { item: IMenuItem }) {
 		<div className={`cursor-pointer ${isActive ? 'text-[#149E53]' : ' '}`}>
 			<Link
 				href={item.link}
-				className='flex flex-col justify-center gap-2.5 items-center py-1.5 mt-2  transition-colors hover:text-[#149E53] grounded-lg'
+				className='flex flex-col justify-center w-2  items-center py-1.5 mt-2  transition-colors hover:text-[#149E53] grounded-lg'
 			>
 				<item.icon />
-				<span>{item.name}</span>
+				<span className='text-[12px]'>{item.name}</span>
 			</Link>
 		</div>
 	)

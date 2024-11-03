@@ -48,7 +48,7 @@ export const ContentBody: React.FC = () => {
 				{recommendations.map(word => (
 					<li
 						key={word.id}
-						className='flex justify-between items-center border-b dark:border-none  hover:bg-white dark:hover:bg-slate-400'
+						className='flex justify-between items-center   hover:bg-white dark:hover:bg-slate-400'
 					>
 						<Link
 							className='w-full p-4 h-full cursor-pointer flex justify-between'
@@ -62,7 +62,7 @@ export const ContentBody: React.FC = () => {
 										? word.word
 										: getFirstWord(word.short_words)}
 								</span>
-								<span>{word.short_meaning}</span>
+								<span className='text-gray-400'>{word.short_meaning}</span>
 							</div>
 						</Link>
 						<button onClick={() => handleBookmarkClick(word.id)}>
